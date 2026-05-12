@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+*.so
+.venv/
+venv/
+env/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Data — ignore generated artifacts only; keep sample docs and mock fixtures
+data/processed/
+*.parquet
+# (data/raw/ sample documents and data/mock/ fixtures ARE committed)
+
+# Vector stores
+chroma_db/
+*.faiss
+
+# AWS
+.aws/
+
+# Secrets
+*.pem
+*.key
+secrets.json
+
+# Docker
+.docker/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Reports (generated)
+reports/evaluation_results.csv

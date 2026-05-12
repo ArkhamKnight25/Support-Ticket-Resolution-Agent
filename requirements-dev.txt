@@ -1,0 +1,18 @@
+# Full local development dependencies
+# Includes everything in requirements.txt plus notebooks, PDF support, evaluation tools
+-r requirements.txt
+
+# Document processing (optional PDF support)
+pypdf>=4.3.0
+python-docx>=1.1.0
+
+# Evaluation
+ragas>=0.1.21
+datasets>=2.21.0
+
+# Notebooks
+ipykernel>=6.29.0
+jupyter>=1.1.0
+
+# Extra test tooling
+pytest-cov>=5.0.0
