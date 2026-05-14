@@ -1,0 +1,193 @@
+{
+  "Comment": "Document ingestion pipeline for Enterprise AI Ops Copilot. Triggered by EventBridge on S3 ObjectCreated.",
+  "StartAt": "ValidateDocument",
+  "States": {
+    "ValidateDocument": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${ValidateDocumentLambdaArn}",
+        "Payload": {
+          "bucket.$": "$.detail.bucket.name",
+          "key.$": "$.detail.object.key"
+        }
+      },
+      "ResultSelector": {
+        "valid.$": "$.Payload.valid",
+        "document_type.$": "$.Payload.document_type",
+        "reason.$": "$.Payload.reason"
+      },
+      "ResultPath": "$.validation",
+      "Next": "IsValid",
+      "Retry": [
+        {
+          "ErrorEquals": ["Lambda.ServiceException", "Lambda.TooManyRequestsException"],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 3,
+          "BackoffRate": 2.0
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "HandleFailure"
+        }
+      ]
+    },
+
+    "IsValid": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.validation.valid",
+          "BooleanEquals": true,
+          "Next": "ExtractText"
+        }
+      ],
+      "Default": "RejectDocument"
+    },
+
+    "RejectDocument": {
+      "Type": "Pass",
+      "Parameters": {
+        "status": "rejected",
+        "reason.$": "$.validation.reason"
+      },
+      "Next": "SaveIngestionLog"
+    },
+
+    "ExtractText": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${ExtractTextLambdaArn}",
+        "Payload": {
+          "bucket.$": "$.detail.bucket.name",
+          "key.$": "$.detail.object.key",
+          "document_type.$": "$.validation.document_type"
+        }
+      },
+      "ResultSelector": {
+        "text_location.$": "$.Payload.text_location"
+      },
+      "ResultPath": "$.extraction",
+      "Next": "ChunkDocument",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "HandleFailure"
+        }
+      ]
+    },
+
+    "ChunkDocument": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${ChunkDocumentLambdaArn}",
+        "Payload": {
+          "text_location.$": "$.extraction.text_location",
+          "chunk_size": 500,
+          "chunk_overlap": 50
+        }
+      },
+      "ResultSelector": {
+        "chunks_location.$": "$.Payload.chunks_location",
+        "chunk_count.$": "$.Payload.chunk_count"
+      },
+      "ResultPath": "$.chunking",
+      "Next": "GenerateEmbeddings",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "HandleFailure"
+        }
+      ]
+    },
+
+    "GenerateEmbeddings": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::ecs:runTask.sync",
+      "Parameters": {
+        "Cluster": "${EcsClusterArn}",
+        "TaskDefinition": "${EmbeddingTaskDefinitionArn}",
+        "LaunchType": "FARGATE",
+        "NetworkConfiguration": {
+          "AwsvpcConfiguration": {
+            "Subnets": ["${PrivateSubnetId}"],
+            "SecurityGroups": ["${EcsSecurityGroupId}"],
+            "AssignPublicIp": "DISABLED"
+          }
+        },
+        "Overrides": {
+          "ContainerOverrides": [
+            {
+              "Name": "embedding-job",
+              "Environment": [
+                { "Name": "CHUNKS_LOCATION", "Value.$": "$.chunking.chunks_location" }
+              ]
+            }
+          ]
+        }
+      },
+      "ResultPath": "$.embedding",
+      "Next": "UpdateVectorIndex",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "HandleFailure"
+        }
+      ]
+    },
+
+    "UpdateVectorIndex": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${UpdateVectorIndexLambdaArn}",
+        "Payload": {
+          "chunks_location.$": "$.chunking.chunks_location",
+          "index": "enterprise-ops"
+        }
+      },
+      "ResultPath": "$.indexing",
+      "Next": "SaveIngestionLog",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "HandleFailure"
+        }
+      ]
+    },
+
+    "SaveIngestionLog": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::dynamodb:putItem",
+      "Parameters": {
+        "TableName": "${IngestionLogTable}",
+        "Item": {
+          "document_key": { "S.$": "$.detail.object.key" },
+          "ingested_at": { "S.$": "$$.State.EnteredTime" },
+          "status": { "S": "complete" }
+        }
+      },
+      "End": true
+    },
+
+    "HandleFailure": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sns:publish",
+      "Parameters": {
+        "TopicArn": "${IngestionAlertTopicArn}",
+        "Subject": "Document Ingestion Failed",
+        "Message.$": "$.error"
+      },
+      "End": true
+    }
+  }
+}
