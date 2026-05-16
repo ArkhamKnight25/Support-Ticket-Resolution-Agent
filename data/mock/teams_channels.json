@@ -1,0 +1,42 @@
+[
+  {
+    "channel_id": "ops-001",
+    "name": "operations-alerts",
+    "description": "Primary channel for all production alerts and incident notifications",
+    "team": "Operations",
+    "audience": ["on-call engineers", "ops leads", "management"],
+    "use_for": ["P1 incidents", "service degradation", "deployment issues"]
+  },
+  {
+    "channel_id": "ops-002",
+    "name": "incident-response",
+    "description": "Active incident coordination and war room discussions",
+    "team": "Operations",
+    "audience": ["incident commanders", "engineers", "DBA team"],
+    "use_for": ["active P1/P2 incidents", "root cause analysis", "war room"]
+  },
+  {
+    "channel_id": "ops-003",
+    "name": "on-call",
+    "description": "On-call handoff notes and shift updates",
+    "team": "Operations",
+    "audience": ["on-call engineers"],
+    "use_for": ["shift handoffs", "known issues", "monitoring notes"]
+  },
+  {
+    "channel_id": "eng-001",
+    "name": "deployments",
+    "description": "Deployment announcements and rollback notifications",
+    "team": "Engineering",
+    "audience": ["all engineers", "QA"],
+    "use_for": ["deployment announcements", "rollbacks", "hotfixes"]
+  },
+  {
+    "channel_id": "eng-002",
+    "name": "payments-team",
+    "description": "Payments engineering team channel",
+    "team": "Engineering",
+    "audience": ["payments engineers", "payments lead"],
+    "use_for": ["payment-api issues", "team coordination"]
+  }
+]
