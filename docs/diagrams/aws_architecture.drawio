@@ -1,0 +1,50 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram name="AWS Architecture" id="awsarch1">
+    <mxGraphModel dx="1120" dy="720" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1120" pageHeight="720" math="0" shadow="1">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="AWS Production Architecture" style="text;html=1;align=center;fontSize=18;fontStyle=1;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="340" y="12" width="440" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ingest" value="Document Ingestion (event-driven, async)" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=#f7f9fb;strokeColor=#b0c4de;verticalAlign=top;fontStyle=1;fontColor=#5a7390;align=left;spacingLeft=12;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="78" width="1040" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="runtime" value="Runtime API" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=#fbf8f7;strokeColor=#deb0b0;verticalAlign=top;fontStyle=1;fontColor=#90605a;align=left;spacingLeft=12;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="400" width="1040" height="250" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s3" value="Amazon S3&#10;documents" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ff9900;strokeColor=#232f3e;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="70" y="132" width="150" height="52" as="geometry" /></mxCell>
+        <mxCell id="eb" value="EventBridge&#10;s3:ObjectCreated" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ff9900;strokeColor=#232f3e;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="278" y="132" width="150" height="52" as="geometry" /></mxCell>
+        <mxCell id="sf" value="Step Functions&#10;orchestration" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ff9900;strokeColor=#232f3e;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="486" y="132" width="150" height="52" as="geometry" /></mxCell>
+        <mxCell id="lambda" value="Lambda&#10;validate document" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ff9900;strokeColor=#232f3e;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="694" y="132" width="150" height="52" as="geometry" /></mxCell>
+        <mxCell id="ecsembed" value="ECS Fargate&#10;embedding job" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ff9900;strokeColor=#232f3e;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="892" y="132" width="160" height="52" as="geometry" /></mxCell>
+
+        <mxCell id="os" value="Amazon OpenSearch&#10;vector store (RAG index)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ff9900;strokeColor=#232f3e;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="450" y="300" width="220" height="68" as="geometry" /></mxCell>
+
+        <mxCell id="users" value="Users" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="70" y="474" width="160" height="52" as="geometry" /></mxCell>
+        <mxCell id="alb" value="App Load Balancer&#10;HTTPS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ff9900;strokeColor=#232f3e;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="286" y="474" width="160" height="52" as="geometry" /></mxCell>
+        <mxCell id="ecsrun" value="ECS Fargate&#10;FastAPI + LangGraph" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ff9900;strokeColor=#232f3e;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="502" y="474" width="218" height="52" as="geometry" /></mxCell>
+        <mxCell id="bedrock" value="Amazon Bedrock&#10;Claude Haiku 4.5 + Titan + Guardrails" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ff9900;strokeColor=#232f3e;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="776" y="474" width="220" height="52" as="geometry" /></mxCell>
+
+        <mxCell id="cw" value="CloudWatch&#10;logs &amp; metrics" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="486" y="560" width="148" height="44" as="geometry" /></mxCell>
+        <mxCell id="sm" value="Secrets Manager&#10;credentials" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="726" y="560" width="148" height="44" as="geometry" /></mxCell>
+
+        <mxCell id="i1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="s3" target="eb"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="i2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="eb" target="sf"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="i3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="sf" target="lambda"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="i4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="lambda" target="ecsembed"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="i5" value="index vectors" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;fontSize=9;" edge="1" parent="1" source="ecsembed" target="os"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="r1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="users" target="alb"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="alb" target="ecsrun"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="ecsrun" target="bedrock"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r4" value="search vectors" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;fontSize=9;" edge="1" parent="1" source="ecsrun" target="os"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r5" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;dashed=1;strokeColor=#9a9a9a;" edge="1" parent="1" source="cw" target="ecsrun"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r6" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;dashed=1;strokeColor=#9a9a9a;" edge="1" parent="1" source="sm" target="ecsrun"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

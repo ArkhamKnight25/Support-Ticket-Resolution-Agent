@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#16263B"/>
+      <stop offset="55%" stop-color="#0F1A2B"/>
+      <stop offset="100%" stop-color="#0A1320"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="78%" cy="32%" r="55%">
+      <stop offset="0%" stop-color="#FF9900" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#FF9900" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="orange" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFB347"/>
+      <stop offset="100%" stop-color="#FF9900"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- top label -->
+  <rect x="70" y="70" width="9" height="28" rx="2" fill="url(#orange)"/>
+  <text x="92" y="91" font-size="17" font-weight="600" letter-spacing="3" fill="#9FB3C8">GENAI · RAG · AGENTS · AWS · MLOps</text>
+
+  <!-- title -->
+  <text x="70" y="208" font-size="74" font-weight="800" fill="#FFFFFF">Enterprise AI</text>
+  <text x="70" y="288" font-size="74" font-weight="800" fill="#FFFFFF">Operations <tspan fill="#FF9900">Copilot</tspan></text>
+
+  <!-- accent underline -->
+  <rect x="74" y="312" width="340" height="5" rx="2.5" fill="url(#orange)"/>
+
+  <!-- tagline -->
+  <text x="74" y="360" font-size="22" font-weight="400" fill="#C7D3E0">Production-style GenAI system on Amazon Bedrock —</text>
+  <text x="74" y="390" font-size="22" font-weight="400" fill="#C7D3E0">RAG · LangGraph agents · Guardrails · Evaluation · CI/CD</text>
+
+  <!-- tech chips -->
+  <g font-size="15.5" font-weight="600">
+    <g>
+      <rect x="74" y="430" width="160" height="38" rx="19" fill="#1E3147" stroke="#2E4860" stroke-width="1"/>
+      <text x="154" y="455" text-anchor="middle" fill="#FFB347">Amazon Bedrock</text>
+    </g>
+    <g>
+      <rect x="246" y="430" width="92" height="38" rx="19" fill="#1E3147" stroke="#2E4860" stroke-width="1"/>
+      <text x="292" y="455" text-anchor="middle" fill="#E6EDF4">FastAPI</text>
+    </g>
+    <g>
+      <rect x="350" y="430" width="116" height="38" rx="19" fill="#1E3147" stroke="#2E4860" stroke-width="1"/>
+      <text x="408" y="455" text-anchor="middle" fill="#E6EDF4">LangGraph</text>
+    </g>
+    <g>
+      <rect x="478" y="430" width="104" height="38" rx="19" fill="#1E3147" stroke="#2E4860" stroke-width="1"/>
+      <text x="530" y="455" text-anchor="middle" fill="#E6EDF4">ChromaDB</text>
+    </g>
+    <g>
+      <rect x="74" y="478" width="86" height="38" rx="19" fill="#1E3147" stroke="#2E4860" stroke-width="1"/>
+      <text x="117" y="503" text-anchor="middle" fill="#E6EDF4">Docker</text>
+    </g>
+    <g>
+      <rect x="172" y="478" width="148" height="38" rx="19" fill="#1E3147" stroke="#2E4860" stroke-width="1"/>
+      <text x="246" y="503" text-anchor="middle" fill="#E6EDF4">GitHub Actions</text>
+    </g>
+    <g>
+      <rect x="332" y="478" width="116" height="38" rx="19" fill="#1E3147" stroke="#2E4860" stroke-width="1"/>
+      <text x="390" y="503" text-anchor="middle" fill="#E6EDF4">Terraform</text>
+    </g>
+  </g>
+
+  <!-- stats strip -->
+  <g>
+    <text x="74" y="572" font-size="18" font-weight="700" fill="#FF9900">13 Phases<tspan fill="#5C6E80" font-weight="400">  ·  </tspan><tspan fill="#FF9900">58 Tests Passing</tspan><tspan fill="#5C6E80" font-weight="400">  ·  </tspan><tspan fill="#FF9900">CI/CD Green</tspan></text>
+  </g>
+
+  <!-- right-side agent graph motif -->
+  <g transform="translate(910,315)">
+    <!-- connections -->
+    <g stroke="#FF9900" stroke-width="2" opacity="0.55">
+      <line x1="0" y1="-150" x2="0" y2="-70"/>
+      <line x1="0" y1="-70" x2="-120" y2="20"/>
+      <line x1="0" y1="-70" x2="-40" y2="20"/>
+      <line x1="0" y1="-70" x2="40" y2="20"/>
+      <line x1="0" y1="-70" x2="120" y2="20"/>
+      <line x1="-120" y1="20" x2="0" y2="110"/>
+      <line x1="-40" y1="20" x2="0" y2="110"/>
+      <line x1="40" y1="20" x2="0" y2="110"/>
+      <line x1="120" y1="20" x2="0" y2="110"/>
+      <line x1="0" y1="110" x2="0" y2="185"/>
+    </g>
+    <!-- nodes -->
+    <g>
+      <circle cx="0" cy="-150" r="20" fill="#1E3147" stroke="#8FB0CC" stroke-width="2"/>
+      <circle cx="0" cy="-70" r="24" fill="#1E3147" stroke="#C58FD6" stroke-width="2.5"/>
+      <circle cx="-120" cy="20" r="18" fill="#1E3147" stroke="#7FA8E0" stroke-width="2"/>
+      <circle cx="-40" cy="20" r="18" fill="#1E3147" stroke="#7FA8E0" stroke-width="2"/>
+      <circle cx="40" cy="20" r="18" fill="#1E3147" stroke="#7FA8E0" stroke-width="2"/>
+      <circle cx="120" cy="20" r="18" fill="#1E3147" stroke="#7FA8E0" stroke-width="2"/>
+      <circle cx="0" cy="110" r="22" fill="#1E3147" stroke="#E89B9B" stroke-width="2.5"/>
+      <circle cx="0" cy="185" r="26" fill="#FF9900" stroke="#FFC777" stroke-width="3"/>
+    </g>
+    <!-- node icons/labels -->
+    <g font-size="11" font-weight="700" text-anchor="middle">
+      <text x="0" y="-146" fill="#C7D3E0">USER</text>
+      <text x="0" y="-66" fill="#E2C7EC">ROUTE</text>
+      <text x="-120" y="24" fill="#BDD3EE">RAG</text>
+      <text x="-40" y="24" fill="#BDD3EE">TKT</text>
+      <text x="40" y="24" fill="#BDD3EE">SQL</text>
+      <text x="120" y="24" fill="#BDD3EE">MSG</text>
+      <text x="0" y="114" fill="#F2C9C9">GUARD</text>
+      <text x="0" y="190" fill="#3A2A00">LLM</text>
+    </g>
+  </g>
+</svg>

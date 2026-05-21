@@ -387,12 +387,3 @@ See [docs/deployment_guide.md](docs/deployment_guide.md) and [infra/](infra/) fo
 - Multi-tenant session management
 - LangSmith tracing integration
 
----
-
-## Author
-
-**A.L. Supun Tharaka**
-
-> Enterprise AI Operations Copilot is a production-style GenAI system built with Amazon Bedrock, FastAPI, LangGraph, and RAG. It helps operations teams answer questions from internal documents, analyze incident tickets, query structured service metrics, and draft team updates. The system includes document ingestion, embeddings, vector search, agent workflows, mock ServiceNow/Snowflake/MS Teams integrations, guardrails, evaluation metrics, Docker support, CI/CD workflow, and AWS deployment architecture using S3, EventBridge, Step Functions, Lambda, and ECS.
-
-**Skills demonstrated:** LLM Engineering · RAG · Agents · Amazon Bedrock · FastAPI · AWS Orchestration · Data Engineering for AI · MLOps · Responsible AI · Enterprise Integration

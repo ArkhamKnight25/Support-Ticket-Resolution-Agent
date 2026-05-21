@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="800" viewBox="0 0 1080 800" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.18"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4D4D4D"/>
+    </marker>
+  </defs>
+
+  <rect width="1080" height="800" fill="#FFFFFF"/>
+
+  <text x="540" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#232F3E">Agent Workflow — LangGraph Intent Routing</text>
+  <text x="540" y="55" text-anchor="middle" font-size="12.5" fill="#6B6B6B">each intent fires a different combination of tools · prompt injection is blocked before any tool runs</text>
+
+  <!-- edges -->
+  <g stroke="#4D4D4D" stroke-width="1.5" fill="none" marker-end="url(#arrow)">
+    <!-- user -> classify -->
+    <path d="M 540 97 L 540 128"/>
+    <!-- classify fan out to 5 lanes -->
+    <path d="M 470 152 C 300 175, 170 188, 120 210"/>
+    <path d="M 500 170 C 420 185, 360 195, 330 210"/>
+    <path d="M 540 172 L 540 210"/>
+    <path d="M 580 170 C 660 185, 720 195, 750 210"/>
+    <path d="M 610 152 C 780 175, 910 188, 960 210"/>
+    <!-- lane 2 vertical chain -->
+    <path d="M 330 250 L 330 260"/>
+    <path d="M 330 300 L 330 310"/>
+    <!-- lane 4 vertical chain -->
+    <path d="M 750 250 L 750 260"/>
+    <path d="M 750 300 L 750 310"/>
+    <path d="M 750 350 L 750 360"/>
+    <!-- lanes -> evidence_merge -->
+    <path d="M 120 250 C 120 360, 360 400, 440 432"/>
+    <path d="M 330 352 C 330 390, 400 415, 455 432"/>
+    <path d="M 540 250 L 540 430"/>
+    <path d="M 750 402 C 750 415, 660 423, 625 432"/>
+    <path d="M 960 250 C 960 360, 720 400, 645 432"/>
+    <!-- evidence -> guardrail -->
+    <path d="M 540 474 L 540 506"/>
+    <!-- guardrail -> final (passed) -->
+    <path d="M 540 550 L 540 596"/>
+    <!-- final -> answer -->
+    <path d="M 540 640 L 540 696"/>
+    <!-- guardrail -> rejected (blocked) -->
+    <path d="M 640 530 L 716 530"/>
+  </g>
+
+  <!-- lane intent headers -->
+  <g font-size="11" font-style="italic" fill="#8A6D3B" text-anchor="middle">
+    <text x="120" y="200">document_question</text>
+    <text x="330" y="200">incident_analysis</text>
+    <text x="540" y="200">metrics_question</text>
+    <text x="750" y="200">communication_request</text>
+    <text x="960" y="200">general_ai_question</text>
+  </g>
+
+  <!-- edge labels -->
+  <g font-size="10.5" fill="#7A7A7A" text-anchor="middle">
+    <text x="585" y="575">passed</text>
+    <text x="678" y="521">blocked</text>
+    <text x="540" y="675">grounded answer</text>
+  </g>
+
+  <!-- nodes -->
+  <!-- user request -->
+  <g filter="url(#shadow)"><rect x="440" y="58" width="200" height="40" rx="8" fill="#DAE8FC" stroke="#6C8EBF" stroke-width="1.5"/></g>
+  <text x="540" y="83" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1A2B45">User request</text>
+
+  <!-- classify_intent -->
+  <g filter="url(#shadow)"><rect x="440" y="128" width="200" height="42" rx="8" fill="#E1D5E7" stroke="#9673A6" stroke-width="1.5"/></g>
+  <text x="540" y="154" text-anchor="middle" font-size="13.5" font-weight="600" fill="#3D2A47">classify_intent</text>
+
+  <!-- tool boxes -->
+  <g font-size="12.5" font-weight="600" fill="#1A2B45">
+    <!-- lane 1 -->
+    <g filter="url(#shadow)"><rect x="40" y="212" width="160" height="38" rx="7" fill="#DAE8FC" stroke="#6C8EBF" stroke-width="1.4"/></g>
+    <text x="120" y="236" text-anchor="middle">rag_search</text>
+
+    <!-- lane 2 -->
+    <g filter="url(#shadow)"><rect x="250" y="212" width="160" height="38" rx="7" fill="#DAE8FC" stroke="#6C8EBF" stroke-width="1.4"/></g>
+    <text x="330" y="236" text-anchor="middle">ticket_search</text>
+    <g filter="url(#shadow)"><rect x="250" y="262" width="160" height="38" rx="7" fill="#DAE8FC" stroke="#6C8EBF" stroke-width="1.4"/></g>
+    <text x="330" y="286" text-anchor="middle">rag_search</text>
+    <g filter="url(#shadow)"><rect x="250" y="312" width="160" height="38" rx="7" fill="#DAE8FC" stroke="#6C8EBF" stroke-width="1.4"/></g>
+    <text x="330" y="336" text-anchor="middle">sql_query</text>
+
+    <!-- lane 3 -->
+    <g filter="url(#shadow)"><rect x="460" y="212" width="160" height="38" rx="7" fill="#DAE8FC" stroke="#6C8EBF" stroke-width="1.4"/></g>
+    <text x="540" y="236" text-anchor="middle">sql_query</text>
+
+    <!-- lane 4 -->
+    <g filter="url(#shadow)"><rect x="670" y="212" width="160" height="38" rx="7" fill="#DAE8FC" stroke="#6C8EBF" stroke-width="1.4"/></g>
+    <text x="750" y="236" text-anchor="middle">ticket_search</text>
+    <g filter="url(#shadow)"><rect x="670" y="262" width="160" height="38" rx="7" fill="#DAE8FC" stroke="#6C8EBF" stroke-width="1.4"/></g>
+    <text x="750" y="286" text-anchor="middle">rag_search</text>
+    <g filter="url(#shadow)"><rect x="670" y="312" width="160" height="38" rx="7" fill="#DAE8FC" stroke="#6C8EBF" stroke-width="1.4"/></g>
+    <text x="750" y="336" text-anchor="middle">sql_query</text>
+    <g filter="url(#shadow)"><rect x="670" y="362" width="160" height="38" rx="7" fill="#DAE8FC" stroke="#6C8EBF" stroke-width="1.4"/></g>
+    <text x="750" y="386" text-anchor="middle">teams_draft</text>
+  </g>
+
+  <!-- lane 5 passthrough -->
+  <g filter="url(#shadow)"><rect x="880" y="212" width="160" height="38" rx="7" fill="#F5F5F5" stroke="#999999" stroke-width="1.4" stroke-dasharray="4 3"/></g>
+  <text x="960" y="236" text-anchor="middle" font-size="11.5" fill="#666666">(no tools)</text>
+
+  <!-- evidence_merge -->
+  <g filter="url(#shadow)"><rect x="430" y="432" width="220" height="42" rx="8" fill="#E8E8E8" stroke="#808080" stroke-width="1.5"/></g>
+  <text x="540" y="458" text-anchor="middle" font-size="13.5" font-weight="600" fill="#333333">evidence_merge</text>
+
+  <!-- guardrail -->
+  <g filter="url(#shadow)"><rect x="440" y="508" width="200" height="42" rx="8" fill="#F8CECC" stroke="#B85450" stroke-width="1.5"/></g>
+  <text x="540" y="534" text-anchor="middle" font-size="13.5" font-weight="600" fill="#5A1F1D">guardrail</text>
+
+  <!-- rejected -->
+  <g filter="url(#shadow)"><rect x="716" y="510" width="170" height="40" rx="8" fill="#D9534F" stroke="#A03330" stroke-width="1.5"/></g>
+  <text x="801" y="535" text-anchor="middle" font-size="12.5" font-weight="600" fill="#FFFFFF">Rejected (injection)</text>
+
+  <!-- final_response -->
+  <g filter="url(#shadow)"><rect x="430" y="598" width="220" height="42" rx="8" fill="#FFE6CC" stroke="#D79B00" stroke-width="1.5"/></g>
+  <text x="540" y="618" text-anchor="middle" font-size="13.5" font-weight="600" fill="#7A4F00">final_response</text>
+  <text x="540" y="634" text-anchor="middle" font-size="10" fill="#9A6B1F">calls Amazon Bedrock</text>
+
+  <!-- answer -->
+  <g filter="url(#shadow)"><rect x="390" y="698" width="300" height="44" rx="8" fill="#D5E8D4" stroke="#82B366" stroke-width="1.5"/></g>
+  <text x="540" y="718" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1E3A1E">Answer</text>
+  <text x="540" y="734" text-anchor="middle" font-size="10" fill="#4A6B4A">summary · confidence · approval flag</text>
+</svg>

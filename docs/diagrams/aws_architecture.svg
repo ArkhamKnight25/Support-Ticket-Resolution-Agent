@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="720" viewBox="0 0 1120 720" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.18"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4D4D4D"/>
+    </marker>
+  </defs>
+
+  <rect width="1120" height="720" fill="#FFFFFF"/>
+
+  <text x="560" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#232F3E">AWS Production Architecture</text>
+  <text x="560" y="55" text-anchor="middle" font-size="12.5" fill="#6B6B6B">event-driven ingestion · Fargate-hosted API · Bedrock + OpenSearch</text>
+
+  <!-- ===== Ingestion container ===== -->
+  <rect x="40" y="78" width="1040" height="150" rx="10" fill="#F7F9FB" stroke="#B0C4DE" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="60" y="100" font-size="13" font-weight="700" fill="#5A7390">Document Ingestion  (event-driven, async)</text>
+
+  <!-- ===== Runtime container ===== -->
+  <rect x="40" y="400" width="1040" height="250" rx="10" fill="#FBF8F7" stroke="#DEB0B0" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="60" y="422" font-size="13" font-weight="700" fill="#90605A">Runtime API</text>
+
+  <!-- edges -->
+  <g stroke="#4D4D4D" stroke-width="1.6" fill="none" marker-end="url(#arrow)">
+    <!-- ingestion row -->
+    <path d="M 220 158 L 268 158"/>
+    <path d="M 428 158 L 476 158"/>
+    <path d="M 636 158 L 684 158"/>
+    <path d="M 844 158 L 892 158"/>
+    <!-- embedding -> opensearch -->
+    <path d="M 968 184 C 968 250, 700 270, 644 300"/>
+    <!-- runtime row -->
+    <path d="M 230 500 L 286 500"/>
+    <path d="M 446 500 L 502 500"/>
+    <path d="M 720 500 L 776 500"/>
+    <!-- ECS runtime -> opensearch -->
+    <path d="M 610 478 C 610 430, 560 400, 545 372"/>
+    <!-- support (dashed) -->
+  </g>
+  <g stroke="#9A9A9A" stroke-width="1.3" fill="none" stroke-dasharray="4 3" marker-end="url(#arrow)">
+    <path d="M 560 560 L 610 524"/>
+    <path d="M 800 560 L 660 524"/>
+  </g>
+
+  <!-- edge labels -->
+  <g font-size="10.5" fill="#7A7A7A" text-anchor="middle">
+    <text x="560" y="350" transform="rotate(-20 560 350)">search vectors</text>
+    <text x="820" y="250" transform="rotate(18 820 250)">index vectors</text>
+  </g>
+
+  <!-- ===== Ingestion nodes ===== -->
+  <g font-size="12.5" font-weight="600">
+    <g filter="url(#shadow)"><rect x="70" y="132" width="150" height="52" rx="7" fill="#FF9900" stroke="#232F3E" stroke-width="1.5"/></g>
+    <text x="145" y="153" text-anchor="middle" fill="#232F3E">Amazon S3</text>
+    <text x="145" y="170" text-anchor="middle" font-size="10" font-weight="400" fill="#3A2A00">documents</text>
+
+    <g filter="url(#shadow)"><rect x="278" y="132" width="150" height="52" rx="7" fill="#FF9900" stroke="#232F3E" stroke-width="1.5"/></g>
+    <text x="353" y="153" text-anchor="middle" fill="#232F3E">EventBridge</text>
+    <text x="353" y="170" text-anchor="middle" font-size="10" font-weight="400" fill="#3A2A00">s3:ObjectCreated</text>
+
+    <g filter="url(#shadow)"><rect x="486" y="132" width="150" height="52" rx="7" fill="#FF9900" stroke="#232F3E" stroke-width="1.5"/></g>
+    <text x="561" y="153" text-anchor="middle" fill="#232F3E">Step Functions</text>
+    <text x="561" y="170" text-anchor="middle" font-size="10" font-weight="400" fill="#3A2A00">orchestration</text>
+
+    <g filter="url(#shadow)"><rect x="694" y="132" width="150" height="52" rx="7" fill="#FF9900" stroke="#232F3E" stroke-width="1.5"/></g>
+    <text x="769" y="153" text-anchor="middle" fill="#232F3E">Lambda</text>
+    <text x="769" y="170" text-anchor="middle" font-size="10" font-weight="400" fill="#3A2A00">validate document</text>
+
+    <g filter="url(#shadow)"><rect x="892" y="132" width="160" height="52" rx="7" fill="#FF9900" stroke="#232F3E" stroke-width="1.5"/></g>
+    <text x="972" y="153" text-anchor="middle" fill="#232F3E">ECS Fargate</text>
+    <text x="972" y="170" text-anchor="middle" font-size="10" font-weight="400" fill="#3A2A00">embedding job</text>
+  </g>
+
+  <!-- ===== OpenSearch (shared) ===== -->
+  <g filter="url(#shadow)"><rect x="450" y="300" width="220" height="68" rx="10" fill="#FF9900" stroke="#232F3E" stroke-width="2"/></g>
+  <text x="560" y="330" text-anchor="middle" font-size="14" font-weight="700" fill="#232F3E">Amazon OpenSearch</text>
+  <text x="560" y="350" text-anchor="middle" font-size="11" fill="#3A2A00">vector store (RAG index)</text>
+
+  <!-- ===== Runtime nodes ===== -->
+  <g font-size="12.5" font-weight="600">
+    <g filter="url(#shadow)"><rect x="70" y="474" width="160" height="52" rx="7" fill="#DAE8FC" stroke="#6C8EBF" stroke-width="1.5"/></g>
+    <text x="150" y="504" text-anchor="middle" fill="#1A2B45">Users</text>
+
+    <g filter="url(#shadow)"><rect x="286" y="474" width="160" height="52" rx="7" fill="#FF9900" stroke="#232F3E" stroke-width="1.5"/></g>
+    <text x="366" y="495" text-anchor="middle" fill="#232F3E">App Load Balancer</text>
+    <text x="366" y="512" text-anchor="middle" font-size="10" font-weight="400" fill="#3A2A00">HTTPS</text>
+
+    <g filter="url(#shadow)"><rect x="502" y="474" width="218" height="52" rx="7" fill="#FF9900" stroke="#232F3E" stroke-width="1.5"/></g>
+    <text x="611" y="495" text-anchor="middle" fill="#232F3E">ECS Fargate</text>
+    <text x="611" y="512" text-anchor="middle" font-size="10" font-weight="400" fill="#3A2A00">FastAPI + LangGraph</text>
+
+    <g filter="url(#shadow)"><rect x="776" y="474" width="220" height="52" rx="7" fill="#FF9900" stroke="#232F3E" stroke-width="1.5"/></g>
+    <text x="886" y="495" text-anchor="middle" fill="#232F3E">Amazon Bedrock</text>
+    <text x="886" y="512" text-anchor="middle" font-size="10" font-weight="400" fill="#3A2A00">Claude Haiku 4.5 + Titan + Guardrails</text>
+  </g>
+
+  <!-- support nodes -->
+  <g font-size="11" font-weight="600">
+    <g filter="url(#shadow)"><rect x="486" y="560" width="148" height="44" rx="7" fill="#FFF2CC" stroke="#D6B656" stroke-width="1.4"/></g>
+    <text x="560" y="580" text-anchor="middle" fill="#5C4A12">CloudWatch</text>
+    <text x="560" y="595" text-anchor="middle" font-size="9.5" font-weight="400" fill="#7A6520">logs &amp; metrics</text>
+
+    <g filter="url(#shadow)"><rect x="726" y="560" width="148" height="44" rx="7" fill="#FFF2CC" stroke="#D6B656" stroke-width="1.4"/></g>
+    <text x="800" y="580" text-anchor="middle" fill="#5C4A12">Secrets Manager</text>
+    <text x="800" y="595" text-anchor="middle" font-size="9.5" font-weight="400" fill="#7A6520">credentials</text>
+  </g>
+</svg>

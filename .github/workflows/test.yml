@@ -1,0 +1,52 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Create required directories
+        run: |
+          mkdir -p data/raw/policies data/raw/runbooks data/raw/incident_reports
+          mkdir -p data/processed/chunks data/processed/metadata
+          mkdir -p data/mock chroma_db reports
+
+      - name: Seed mock data
+        run: python scripts/seed_mock_data.py
+
+      - name: Ingest documents
+        run: python scripts/ingest_documents.py
+
+      - name: Run all tests
+        run: pytest tests/ -v --tb=short
+        env:
+          APP_ENV: testing
+          AWS_REGION: eu-north-1
+          AWS_ACCESS_KEY_ID: dummy
+          AWS_SECRET_ACCESS_KEY: dummy
+          BEDROCK_CHAT_MODEL_ID: dummy
+          BEDROCK_EMBEDDING_MODEL_ID: dummy
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: reports/

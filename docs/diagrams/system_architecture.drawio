@@ -1,0 +1,69 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram name="System Architecture" id="sysarch1">
+    <mxGraphModel dx="980" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="820" math="0" shadow="1">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="Enterprise AI Ops Copilot — System Architecture" style="text;html=1;align=center;fontSize=20;fontStyle=1;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="180" y="10" width="540" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="user" value="User / Swagger UI / Frontend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="50" width="240" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="fastapi" value="FastAPI Backend&#10;app/main.py" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="134" width="240" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="guard" value="Guardrails&#10;prompt-injection check · PII masking" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="218" width="240" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="langgraph" value="LangGraph Orchestrator&#10;intent routing · app/agents/graph.py" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="302" width="240" height="44" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rag" value="RAG Tool" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="410" width="160" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="ticket" value="Ticket Tool" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="410" width="160" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="sql" value="SQL Tool" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="410" width="160" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="teams" value="Teams Tool" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="410" width="160" height="44" as="geometry" />
+        </mxCell>
+
+        <mxCell id="chroma" value="ChromaDB&#10;vector store" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="510" width="120" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="mock" value="Mock Enterprise Integrations&#10;ServiceNow · Snowflake/SQL · MS Teams (approval gate)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="510" width="560" height="54" as="geometry" />
+        </mxCell>
+
+        <mxCell id="bedrock" value="Amazon Bedrock&#10;Claude Haiku 4.5 · Titan Embeddings" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ff9900;strokeColor=#232f3e;fontSize=14;fontStyle=1;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="320" y="620" width="280" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="final" value="Structured Answer&#10;summary · sources · recommended actions · confidence" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="720" width="320" height="48" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="user" target="fastapi"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="fastapi" target="guard"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="guard" target="langgraph"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="langgraph" target="rag"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="langgraph" target="ticket"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="langgraph" target="sql"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="langgraph" target="teams"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e8" value="retrieve" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;" edge="1" parent="1" source="rag" target="chroma"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="ticket" target="mock"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="sql" target="mock"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="teams" target="mock"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e12" value="evidence" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;" edge="1" parent="1" source="chroma" target="bedrock"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e13" value="evidence" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;" edge="1" parent="1" source="mock" target="bedrock"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e14" value="grounded answer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;" edge="1" parent="1" source="bedrock" target="final"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
